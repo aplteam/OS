@@ -1,0 +1,10 @@
+ R←Test_Misc_002(stopFlag batchFlag);⎕TRAP
+⍝ Exercise the `History` method
+
+⍝ R gets one of: 0=Okay, 1=test case failed, ¯1=test case was not executed due to the "batchFlag"
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←∆Failed
+
+ ##.OS.History
+
+ R←∆OK

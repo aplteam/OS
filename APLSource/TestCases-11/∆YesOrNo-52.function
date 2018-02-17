@@ -1,0 +1,8 @@
+ yes←∆YesOrNo question;flag;answer
+ flag←0
+ :Repeat
+     ⎕←'    >>> ',question,' :'
+     answer←¯1↑⍞
+     flag←answer∊'YyNn'
+ :Until flag
+ yes←answer∊'Yy'

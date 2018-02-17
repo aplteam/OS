@@ -1,0 +1,17 @@
+ R←Test_ShellExecute_002(stopFlag batchFlag);more;rc;result;successFlag;⎕TRAP
+⍝ Execute "pwd" under Linux/Mac OS and fetch result.
+⍝ R gets one of: 0=Okay, 1=test case failed, ¯1=test case was not executed due to the "batchFlag"
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←∆Failed
+
+ :If ~(⊂#.APLTreeUtils.GetOperatingSystem ⍬)∊'Lin' 'Mac'
+     R←∆LinuxOrMacOnly
+     :Return
+ :EndIf
+
+ (rc more result)←##.OS.ShellExecute'pwd'
+ →PassesIf 0=rc
+ →PassesIf 0∊⍴more
+ →PassesIf(,⎕SE.UCMD'cd')≡↑result
+
+ R←∆OK

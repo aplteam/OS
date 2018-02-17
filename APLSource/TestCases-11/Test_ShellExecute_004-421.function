@@ -1,0 +1,20 @@
+ R←Test_ShellExecute_004(stopFlag batchFlag);buff;more;rc;result;successFlag;⎕TRAP
+⍝ Execute "ls" under Linux/Mac OS and fetch result.
+⍝ R gets one of: 0=Okay, 1=test case failed, ¯1=test case was not executed due to the "batchFlag"
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←∆Failed
+
+ :If ~(⊂#.APLTreeUtils.GetOperatingSystem ⍬)∊'Lin' 'Mac'
+     R←∆LinuxOrMacOnly
+     :Return
+ :EndIf
+
+ (rc more result)←##.OS.ShellExecute'ls'
+ →PassesIf 0=rc
+ →PassesIf 0∊⍴more
+ result←' '#.APLTreeUtils.Split #.APLTreeUtils.dmb↑,/' ',¨result
+ buff←↑#.FilesAndDirs.Dir''
+ buff←(1+⍴#.FilesAndDirs.PWD)↓¨buff
+ →PassesIf(⍴result)='.'+.≠↑¨buff
+
+ R←∆OK

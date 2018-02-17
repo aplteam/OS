@@ -1,0 +1,53 @@
+ R←Test_WinExecute_006(stopFlag batchFlag);⎕TRAP;rc;sec;filename;cmd;successFlag;debugging;more;pid;tieNo;tempPath;filename2
+⍝ Test `GetPID` and `KillPID`.
+⍝ A second instance of Dyalog is started which writes its own process ID to a file (↑⎕SI),'.pid'
+⍝ It then creates a second file and holds it exclusively: (↑⎕SI),'.{pid}', meaning that the
+⍝ name of that file depends on the process ID. Both files are placed into the TEMP folder.
+⍝ The test function reads the first file when possible, waits for 2 seconds and then kills the
+⍝ process by treating the contents as process ID.
+⍝ R gets one of: 0=Okay, 1=test case failed, ¯1=test case was not executed due to the "batchFlag"
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←∆Failed
+
+ :If 'Win'≢#.APLTreeUtils.GetOperatingSystem ⍬
+     R←∆WindowsOnly
+     :Return
+ :EndIf
+
+ cmd←'"',(↑#.GetCommandLineArgs),'"'
+ cmd,←' "',#.FilesAndDirs.PWD,'/Tests/Test_ToBeKilled"'
+ cmd,←' session_file=""'
+ cmd,←' maxws=8MB'
+⍝cmd,←' -x' ⍝ For debugging the loaded WS
+ tempPath←#.FilesAndDirs.GetTempPath
+ filename←tempPath,'Test_ToBeKilled.pid'
+ #.FilesAndDirs.DeleteFile filename ⍝ Left-overs?!
+ (successFlag rc more)←##.OS.WinExecute cmd
+ →GoToTidyUp 1≠successFlag
+ →GoToTidyUp 42≠rc
+ →GoToTidyUp~0∊⍴more
+ filename{⎕NEXISTS ⍺: ⋄ _←⎕DL 1 ⋄ 10=⍵: ⋄ ⍺ ∇ ⍵+1}0
+ pid←#.APLTreeUtils.ReadUtf8File filename
+ →GoToTidyUp 1≠↑⎕VFI pid
+ filename2←(¯4↓filename),'.',⍕pid
+ :Trap 19 22
+     tieNo←filename2 ⎕NTIE 0 2
+     →GoToTidyUp 1
+ :Else
+         ⍝ That's okay
+ :EndTrap
+ {}##.OS.KillPID 1⊃⎕VFI pid
+ ⎕DL 0.5
+ :Trap 19 22
+     tieNo←filename2 ⎕NTIE 0 2
+ :Else
+     →GoToTidyUp 1 ⍝ Now it's NOT okay anymore!
+ :EndTrap
+
+ R←∆OK
+
+∆TidyUp:
+ #.FilesAndDirs.DeleteFile filename
+ :Trap 0
+     #.FilesAndDirs.DeleteFile filename2  ⍝ is probably still not available for delete
+ :EndTrap

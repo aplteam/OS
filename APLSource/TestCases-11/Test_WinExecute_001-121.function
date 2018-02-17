@@ -1,0 +1,32 @@
+ R←Test_WinExecute_001(stopFlag batchFlag);⎕TRAP;rc;sec;filename;parms;successFlag;more
+⍝ Start another instance of Dyalog and load a WS that creates a file; parameters a passed via a parameter space.
+⍝ The started WS waits for 3 seconds and then creates a file "Test_WinExecute" as a sibling of the WS
+⍝ R gets one of: 0=Okay, 1=test case failed, ¯1=test case was not executed due to the "batchFlag"
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←∆Failed
+
+ :If 'Win'≢#.APLTreeUtils.GetOperatingSystem ⍬
+     R←∆WindowsOnly
+     :Return
+ :EndIf
+
+ parms←##.OS.CreateParms_WinExecute
+ parms.file←'"',(↑#.GetCommandLineArgs),'"'
+ parms.lpParms,←'"',#.FilesAndDirs.PWD,'/Tests/Test_WinExecute"'
+ parms.lpParms,←' session_file=""'
+ parms.lpParms,←' maxws=8MB'
+⍝parms.lpParms,←' -x'   ⍝ For debugging the loaded WS
+ filename←#.FilesAndDirs.PWD,'/Tests/Test_WinExecute.txt'
+ #.FilesAndDirs.DeleteFile filename
+ (successFlag rc more)←##.OS.WinExecute parms
+ →PassesIf 1=successFlag
+ →PassesIf 42=rc
+ →PassesIf 0∊⍴more
+ sec←filename{#.FilesAndDirs.Exists ⍺:⍵ ⋄ _←⎕DL 1 ⋄ 10=⍵:¯1 ⋄ ⍺ ∇ ⍵+1}0
+ →GoToTidyUp ¯1=sec ⍝ Something went wrong!
+ →GoToTidyUp 3>sec
+
+ R←∆OK
+
+∆TidyUp:
+ #.FilesAndDirs.DeleteFile filename

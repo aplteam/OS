@@ -1,0 +1,17 @@
+ R←Test_ShellExecute_003(stopFlag batchFlag);more;rc;result;successFlag;⎕TRAP
+⍝ Execute a command the user does not have the right to execute  "dhclient", a command that requires root priviliges
+⍝ R gets one of: 0=Okay, 1=test case failed, ¯1=test case was not executed due to the "batchFlag"
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←∆Failed
+
+ :If ~(⊂#.APLTreeUtils.GetOperatingSystem ⍬)∊'Lin' 'Mac'
+     R←∆LinuxOrMacOnly
+     :Return
+ :EndIf
+
+ (rc more result)←##.OS.ShellExecute'dhclient'
+ →PassesIf 0≠rc
+ →PassesIf~0∊⍴more
+ →PassesIf 0∊⍴result
+
+ R←∆OK
