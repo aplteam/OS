@@ -1,4 +1,8 @@
-# OS: Interface to the Operating system 
+# Interface to the Operating system 
+
+
+`OS` is a member of the APLTree library. The library is a collection of classes etc. that aim to support the Dyalog APL programmer. Search GitHub for "apltree" and you will find solutions to many every-day problems Dyalog APL programmers might have to solve.
+
 
 ## Overview
 
@@ -22,5 +26,6 @@ Shared Methods:
   WinExecute       
 ```
 
+## Requirements
 
 `OS` needs version 15.0 Unicode of Dyalog APL.
