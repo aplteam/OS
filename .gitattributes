@@ -5,3 +5,4 @@ APLSource/ linguist-vendored=false
 Dest/ linguist-vendored=false
 Make/ linguist-vendored=false
 Tests/ linguist-vendored=false
+*.dyalog/ linguist-vendored=true
