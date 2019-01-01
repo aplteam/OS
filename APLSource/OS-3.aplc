@@ -20,10 +20,8 @@
       ⍝ * 1.4.1
       ⍝   * The `WinExecBatch` function did not hide its console window.
       ⍝   * Bug fix: `WinExecBatch` did not always return a result due to a timing issue.
-      ⍝ * 1.4.0
-      ⍝   * Converted from the APL wiki to GitHub
-      ⍝ * 1.3.1
-      ⍝   * Some glitches in the documentation fixed.
+      ⍝\\
+      ⍝ For information regarding older versions see <https://github.com/aplteam/OS/releases>
     ∇
 
     ∇ (rc more result)←ShellExecute cmd;buff
