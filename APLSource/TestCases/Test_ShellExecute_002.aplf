@@ -4,14 +4,14 @@
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←∆Failed
 
- :If ~(⊂#.APLTreeUtils.GetOperatingSystem ⍬)∊'Lin' 'Mac'
+ :If ~(⊂##.APLTreeUtils.GetOperatingSystem ⍬)∊'Lin' 'Mac'
      R←∆LinuxOrMacOnly
      :Return
  :EndIf
 
  (rc more result)←##.OS.ShellExecute'pwd'
  →PassesIf 0=rc
- →PassesIf 0∊⍴more
+ →PassesIf 0=≢more
  →PassesIf(,⎕SE.UCMD'cd')≡↑result
 
  R←∆OK

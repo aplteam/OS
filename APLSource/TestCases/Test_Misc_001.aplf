@@ -5,6 +5,6 @@
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←∆Failed
 
- →PassesIf 3=⍴##.OS.Version
+ →PassesIf 3=≢##.OS.Version
 
  R←∆OK

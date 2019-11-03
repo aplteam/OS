@@ -4,7 +4,7 @@
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←∆Failed
 
- :If ~(⊂#.APLTreeUtils.GetOperatingSystem ⍬)∊'Lin' 'Mac'
+ :If ~(⊂##.APLTreeUtils.GetOperatingSystem ⍬)∊'Lin' 'Mac'
      R←∆LinuxOrMacOnly
      :Return
  :EndIf
@@ -12,9 +12,9 @@
  (rc more result)←##.OS.ShellExecute'ls'
  →PassesIf 0=rc
  →PassesIf 0∊⍴more
- result←' '#.APLTreeUtils.Split #.APLTreeUtils.dmb↑,/' ',¨result
- buff←↑#.FilesAndDirs.Dir''
- buff←(1+⍴#.FilesAndDirs.PWD)↓¨buff
- →PassesIf(⍴result)='.'+.≠↑¨buff
+ result←' '##.APLTreeUtils.Split ##.APLTreeUtils.dmb↑,/' ',¨result
+ buff←↑##.FilesAndDirs.Dir''
+ buff←(1+≢##.FilesAndDirs.PWD)↓¨buff
+ →PassesIf(≢result)='.'+.≠↑¨buff
 
  R←∆OK
