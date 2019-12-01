@@ -2,21 +2,21 @@
 ⍝ Show an HTML file via `ShellExecute`. Must run is its own thread, otherwise APL is blocked.
 ⍝ R gets one of: 0=Okay, 1=test case failed, ¯1=test case was not executed due to the "batchFlag"
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
- R←∆Failed
+ R←T._Failed
 
  :If 'Mac'≢##.APLTreeUtils.GetOperatingSystem ⍬
-     R←∆MacOnly
+     R←T._MacOnly
      :Return
  :EndIf
  :If batchFlag
-     R←∆NoBatchTest
+     R←T._NoBatchTest
      :Return
  :EndIf
 
  filename←##.FilesAndDirs.PWD,'/Tests/Sample.html'
  (rc more result)←##.OS.ShellExecute'open file://',filename,' &'
- →PassesIf 0=rc
- →PassesIf 0=≢more
- →PassesIf 1=∆YesOrNo'Did ',filename,' show up in your default browser or in the RIDE browser?'
+ →T.PassesIf 0=rc
+ →T.PassesIf 0=≢more
+ →T.PassesIf 1=∆YesOrNo'Did ',filename,' show up in your default browser or in the RIDE browser?'
 
- R←∆OK
+ R←T._OK

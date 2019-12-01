@@ -2,19 +2,19 @@
 ⍝ Execute "Dir" command with `WinExecBatch` and return its standard output.
 ⍝ R gets one of: 0=Okay, 1=test case failed, ¯1=test case was not executed due to the "batchFlag"
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
- R←∆Failed
+ R←T._Failed
 
  :If 'Win'≢##.APLTreeUtils.GetOperatingSystem ⍬
-     R←∆WindowsOnly
+     R←T._WindowsOnly
      :Return
  :EndIf
 
  cmd←'CMD /C Dir %windir% '
 ⍝cmd,←' -x'  For debugging the loaded WS
  (successFlag rc result)←##.OS.WinExecBatch cmd
- →PassesIf 1=successFlag
- →PassesIf 42=rc
+ →T.PassesIf 1=successFlag
+ →T.PassesIf 42=rc
  WinDir←##.WinSys.ExpandEnv'%windir%'
- →PassesIf∧/∧/¨((1+≢WinDir)↓¨↑##.FilesAndDirs.Dir WinDir,'\')∊¨⊂⊃result
+ →T.PassesIf∧/∧/¨((1+≢WinDir)↓¨↑##.FilesAndDirs.Dir WinDir,'\')∊¨⊂⊃result
 
- R←∆OK
+ R←T._OK

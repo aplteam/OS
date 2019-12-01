@@ -3,10 +3,10 @@
 ⍝ The started WS waits for 3 seconds and then creates a file "Test_Win_002" as a sibling of the WS
 ⍝ R gets one of: 0=Okay, 1=test case failed, ¯1=test case was not executed due to the "batchFlag"
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
- R←∆Failed
+ R←T._Failed
 
  :If 'Win'≢##.APLTreeUtils.GetOperatingSystem ⍬
-     R←∆WindowsOnly
+     R←T._WindowsOnly
      :Return
  :EndIf
 
@@ -14,7 +14,7 @@
  parms.file←↑#.GetCommandLineArgs
  parms.lpParms←'file="foo maxws=8mb'
  (successFlag rc more)←##.OS.WinExecute parms
- →PassesIf successFlag=0
- →PassesIf 0≠≢more
+ →T.PassesIf successFlag=0
+ →T.PassesIf 0≠≢more
 
- R←∆OK
+ R←T._OK

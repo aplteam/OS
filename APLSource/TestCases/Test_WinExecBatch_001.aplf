@@ -2,17 +2,17 @@
 ⍝ Execute "cd" under Windows in a temp BAT file and fetch the result.
 ⍝ R gets one of: 0=Okay, 1=test case failed, ¯1=test case was not executed due to the "batchFlag"
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
- R←∆Failed
+ R←T._Failed
 
  :If 'Win'≢##.APLTreeUtils.GetOperatingSystem ⍬
-     R←∆WindowsOnly
+     R←T._WindowsOnly
      :Return
  :EndIf
 
  cmd←'CMD /C cd'
  (successFlag rc result)←##.OS.WinExecBatch cmd
- →PassesIf 1=successFlag
- →PassesIf 42=rc
- →PassesIf ##.FilesAndDirs.(EnforceBackslash PWD)≡∊result
+ →T.PassesIf 1=successFlag
+ →T.PassesIf 42=rc
+ →T.PassesIf ##.FilesAndDirs.(EnforceBackslash PWD)≡∊result
 
- R←∆OK
+ R←T._OK

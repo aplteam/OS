@@ -3,10 +3,10 @@
 ⍝ The started WS waits for 3 seconds and then creates a file "Test_WinExecute" as a sibling of the WS
 ⍝ R gets one of: 0=Okay, 1=test case failed, ¯1=test case was not executed due to the "batchFlag"
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
- R←∆Failed
+ R←T._Failed
 
  :If 'Win'≢##.APLTreeUtils.GetOperatingSystem ⍬
-     R←∆WindowsOnly
+     R←T._WindowsOnly
      :Return
  :EndIf
 
@@ -19,14 +19,14 @@
  filename←##.FilesAndDirs.PWD,'/Tests/Test_WinExecute.txt'
  ##.FilesAndDirs.DeleteFile filename
  (successFlag rc more)←##.OS.WinExecute parms
- →PassesIf 1=successFlag
- →PassesIf 42=rc
- →PassesIf 0∊⍴more
+ →T.PassesIf 1=successFlag
+ →T.PassesIf 42=rc
+ →T.PassesIf 0∊⍴more
  sec←filename{##.FilesAndDirs.Exists ⍺:⍵ ⋄ _←⎕DL 1 ⋄ 10=⍵:¯1 ⋄ ⍺ ∇ ⍵+1}0
- →GoToTidyUp ¯1=sec ⍝ Something went wrong!
- →GoToTidyUp 3>sec
+ →T.GoToTidyUp ¯1=sec ⍝ Something went wrong!
+ →T.GoToTidyUp 3>sec
 
- R←∆OK
+ R←T._OK
 
 ∆TidyUp:
  ##.FilesAndDirs.DeleteFile filename

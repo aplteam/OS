@@ -1,4 +1,3 @@
  Initial
  ⎕IO←0 ⋄ ⎕ML←3
- ##.Tester.EstablishHelpersIn ⍬
  ##.FilesAndDirs.PolishCurrentDir
