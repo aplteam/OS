@@ -12,12 +12,14 @@
 
     ∇ r←Version
       :Access Public shared
-      r←(Last⍕⎕THIS)'2.0.0.18' '2020-03-22'
+      r←'OS' '2.0.1.20' '2020-06-04'
     ∇
 
     ∇ History
       :Access Public shared
-      ⍝ * 1.5.0
+      ⍝ * 2.0.1 from 2020-06-04
+      ⍝   * ShellExecute could fail under Windows
+      ⍝ * 2.0.0 from 2020-03-22
       ⍝   * BREAKING CHANGE: file extension is now .aplc rather than .dyalog
       ⍝\\
       ⍝ For information regarding older versions see <https://github.com/aplteam/OS/releases>
@@ -40,8 +42,8 @@
           :Else
               cmd,←' 2>&1; echo "CMDEXIT=$?"; exit 0'
               buff←⎕SH cmd
-              rc←⍎(≢'CMDEXIT=')↓↑¯1↑buff
-              :If 0=rc
+              rc←{6::⍬ ⋄ ⍎⍵}(≢'CMDEXIT=')↓↑¯1↑buff
+              :If 0≡rc
                   result←¯1↓buff
               :Else
                   more←¯1↓buff
