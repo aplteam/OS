@@ -4,7 +4,7 @@
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- :If 'Mac'≢##.APLTreeUtils.GetOperatingSystem ⍬
+ :If 'Mac'≢##.APLTreeUtils2.GetOperatingSystem ⍬
      R←T._MacOnly
      :Return
  :EndIf

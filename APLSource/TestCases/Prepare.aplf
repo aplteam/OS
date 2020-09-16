@@ -1,2 +1,9 @@
- Prepare
+ Prepare;xml
+ ⎕IO←1 ⋄ ⎕ML←1
  T←⎕NEW ##.Tester2 ⎕THIS
+ T.codeCoverage←⎕NEW ##.CodeCoverage(,⊂'#.OS')
+ T.codeCoverage.ignore←(⍕⎕THIS),',#.OS.Initialize'
+ xml←⎕XML⊃⎕NGET'publish.config'
+ T.codeCoverage.ignore,←',',⊃{⍺,',',⍵}/{⍵[;3]⌿⍨{⊃⍵[;1]≡¨⊂'development'}¨⍵[;4]}(xml[;2]≡¨⊂'script')⌿xml
+ T.codeCoverage.filename←(⊃1 ⎕NPARTS''),'TestResults/CodeCoverage'
+ ⍝Done

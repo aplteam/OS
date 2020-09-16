@@ -5,13 +5,13 @@
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- :If 'Win'≢##.APLTreeUtils.GetOperatingSystem ⍬
+ :If 'Win'≢##.APLTreeUtils2.GetOperatingSystem ⍬
      R←T._WindowsOnly
      :Return
  :EndIf
 
  parms←##.OS.CreateParms_WinExecute
- parms.file←↑#.GetCommandLineArgs
+ parms.file←⊃#.GetCommandLineArgs
  parms.lpParms←'file="foo maxws=8mb'
  (successFlag rc more)←##.OS.WinExecute parms
  →T.PassesIf successFlag=0

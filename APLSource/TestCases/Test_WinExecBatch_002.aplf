@@ -1,20 +1,21 @@
- R←Test_WinExecBatch_002(stopFlag batchFlag);⎕TRAP;rc;sec;successFlag;debugging;result;cmd;WinDir;EndIf
+ R←Test_WinExecBatch_002(stopFlag batchFlag);⎕TRAP;rc;sec;successFlag;debugging;result;cmd;EndIf;path;list
 ⍝ Execute "Dir" command with `WinExecBatch` and return its standard output.
 ⍝ R gets one of: 0=Okay, 1=test case failed, ¯1=test case was not executed due to the "batchFlag"
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- :If 'Win'≢##.APLTreeUtils.GetOperatingSystem ⍬
+ :If 'Win'≢##.APLTreeUtils2.GetOperatingSystem ⍬
      R←T._WindowsOnly
      :Return
  :EndIf
 
- cmd←'CMD /C Dir %windir% '
+ path←##.FilesAndDirs.ExpandPath ##.FilesAndDirs.PWD,'..\..\'
+ cmd←'CMD /C Dir ',path
 ⍝cmd,←' -x'  For debugging the loaded WS
  (successFlag rc result)←##.OS.WinExecBatch cmd
  →T.PassesIf 1=successFlag
  →T.PassesIf 42=rc
- WinDir←##.WinSys.ExpandEnv'%windir%'
- →T.PassesIf∧/∧/¨((1+≢WinDir)↓¨↑##.FilesAndDirs.Dir WinDir,'\')∊¨⊂⊃result
+ list←(≢path)↓¨⊃##.FilesAndDirs.Dir path
+ →T.PassesIf∧/∨/¨list⍷¨⊂result
 
  R←T._OK

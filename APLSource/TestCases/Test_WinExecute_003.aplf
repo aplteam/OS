@@ -5,12 +5,12 @@
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- :If 'Win'≢##.APLTreeUtils.GetOperatingSystem ⍬
+ :If 'Win'≢##.APLTreeUtils2.GetOperatingSystem ⍬
      R←T._WindowsOnly
      :Return
  :EndIf
 
- cmd←'"',(↑#.GetCommandLineArgs),'"'
+ cmd←'"',(⊃#.GetCommandLineArgs),'"'
  cmd,←' "',##.FilesAndDirs.PWD,'/Tests/Test_WinExecute"'
  cmd,←' session_file=""'
  cmd,←' maxws="8MB'

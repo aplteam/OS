@@ -5,13 +5,13 @@
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- :If 'Win'≢##.APLTreeUtils.GetOperatingSystem ⍬
+ :If 'Win'≢##.APLTreeUtils2.GetOperatingSystem ⍬
      R←T._WindowsOnly
      :Return
  :EndIf
 
  parms←##.OS.CreateParms_WinExecute
- parms.file←'"',(↑#.GetCommandLineArgs),'"'
+ parms.file←'"',(⊃#.GetCommandLineArgs),'"'
  parms.lpParms,←'"',##.FilesAndDirs.PWD,'/Tests/Test_WinExecute"'
  parms.lpParms,←' session_file=""'
  parms.lpParms,←' maxws=8MB'
@@ -21,7 +21,7 @@
  (successFlag rc more)←##.OS.WinExecute parms
  →T.PassesIf 1=successFlag
  →T.PassesIf 42=rc
- →T.PassesIf 0∊⍴more
+ →T.PassesIf 0=≢more
  sec←filename{##.FilesAndDirs.Exists ⍺:⍵ ⋄ _←⎕DL 1 ⋄ 10=⍵:¯1 ⋄ ⍺ ∇ ⍵+1}0
  →T.GoToTidyUp ¯1=sec ⍝ Something went wrong!
  →T.GoToTidyUp 3>sec

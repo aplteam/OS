@@ -4,7 +4,7 @@
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- :If 'Win'≢##.APLTreeUtils.GetOperatingSystem ⍬
+ :If 'Win'≢##.APLTreeUtils2.GetOperatingSystem ⍬
      R←T._WindowsOnly
      :Return
  :EndIf
@@ -13,6 +13,6 @@
  (successFlag rc result)←##.OS.WinExecBatch cmd
  →T.PassesIf 1=successFlag
  →T.PassesIf 42=rc
- →T.PassesIf ##.FilesAndDirs.(EnforceBackslash PWD)≡∊result
+ →T.PassesIf ##.FilesAndDirs.(EnforceBackslash PWD)≡(∊result)~⎕TC
 
  R←T._OK
