@@ -11,7 +11,7 @@
 
     ∇ r←Version
       :Access Public shared
-      r←'OS' '3.0.0.39' '2020-09-18'
+      r←'OS' '3.0.0.40' '2020-09-18'
     ∇
 
     ∇ History
