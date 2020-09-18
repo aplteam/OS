@@ -12,6 +12,6 @@
  (rc more result)←##.OS.ShellExecute'pwd'
  →T.PassesIf 0=rc
  →T.PassesIf 0=≢more
- →T.PassesIf(,⎕SE.UCMD'cd')≡↑result
+ →T.PassesIf(,⎕SE.UCMD'cd')≡⊃result
 
  R←T._OK

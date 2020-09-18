@@ -1,3 +1,3 @@
  QLX
- ⍝ For the test cases we nedd `OS` in #!
+ ⍝ For the test cases we need `OS` in #!
  #.OS←OS

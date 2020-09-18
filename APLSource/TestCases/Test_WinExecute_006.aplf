@@ -1,5 +1,5 @@
  R←Test_WinExecute_006(stopFlag batchFlag);⎕TRAP;rc;sec;filename;cmd;successFlag;debugging;more;pid;tieNo;tempPath;filename2
-⍝ Test `GetPID` and `KillPID`.
+⍝ Test `GetPID` and `KillPID` under Windows
 ⍝ A second instance of Dyalog is started which writes its own process ID to a file (↑⎕SI),'.pid'
 ⍝ It then creates a second file and holds it exclusively: (↑⎕SI),'.{pid}', meaning that the
 ⍝ name of that file depends on the process ID. Both files are placed into the TEMP folder.
@@ -14,11 +14,13 @@
      :Return
  :EndIf
 
- cmd←'"',(⊃#.GetCommandLineArgs),'"'
+ cmd←'"',(⊃2 ⎕NQ #'GetCommandLineArgs'),'"'
  cmd,←' "',##.FilesAndDirs.PWD,'/Tests/Test_ToBeKilled"'
  cmd,←' session_file=""'
  cmd,←' maxws=8MB'
-⍝cmd,←' -x' ⍝ For debugging the loaded WS
+ :If 0
+     cmd,←' -x' ⍝ For debugging the loaded WS
+ :EndIf
  tempPath←##.FilesAndDirs.GetTempPath
  filename←tempPath,'Test_ToBeKilled.pid'
  ##.FilesAndDirs.DeleteFile filename ⍝ Left-overs?!

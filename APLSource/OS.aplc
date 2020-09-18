@@ -11,7 +11,7 @@
 
     ∇ r←Version
       :Access Public shared
-      r←'OS' '3.0.0.39' '2020-09-07'
+      r←'OS' '3.0.0.39' '2020-09-18'
     ∇
 
     ∇ History
@@ -41,7 +41,7 @@
           :Else
               cmd,←' 2>&1; echo "CMDEXIT=$?"; exit 0'
               buff←⎕SH cmd
-              rc←{6::⍬ ⋄ ⍎⍵}(≢'CMDEXIT=')↓⊃¯1↑buff
+              rc←{2 6::⍬ ⋄ ⍎⍵}(≢'CMDEXIT=')↓⊃¯1↑buff
               :If 0≡rc
                   result←¯1↓buff
               :Else
@@ -182,7 +182,7 @@
       :Else
           result←more
       :EndIf
-      ⎕DL .1
+      ⎕DL 0.1
       {}{19 22::⍬ ⋄ ⎕NDELETE ⍵}¨batFilename tempFilename
     ∇
 
@@ -223,7 +223,7 @@
       :EndSelect
     ∇
 
-    ∇ r←KillPID pid;∆KillPID;PROCESS_TERMINATE;False;OpenProcess;TerminateProcess;h;∆OpenProcess;∆CloseHandle;∆TerminateProcess;thisPID
+    ∇ r←KillPID pid;False;OpenProcess;PROCESS_TERMINATE;TerminateProcess;h;thisPID;∆CloseHandle;∆OpenProcess;∆TerminateProcess
     ⍝ Kill one or more processes identified by their process ID.\\
     ⍝ See also [`GetPID`](#).
       :Access Public Shared
@@ -245,11 +245,8 @@
               {}∆CloseHandle h
           :Until 0=≢pid←1↓pid
       :CaseList 'Lin' 'Mac'
-          '∆KillPID'⎕NA'I4 ',GetSharedLib,'| kill I4 I4'
           :Repeat
-              :Trap 11
-                  r←∆KillPID 2↑⊃pid
-              :EndTrap
+              ⎕SH'kill -9 ',⍕pid
           :Until 0=≢pid←1↓pid
       :Else
           . ⍝ Huuh?!

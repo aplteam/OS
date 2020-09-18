@@ -11,7 +11,9 @@
 
  path←##.FilesAndDirs.ExpandPath ##.FilesAndDirs.PWD,'..\..\'
  cmd←'CMD /C Dir ',path
-⍝cmd,←' -x'  For debugging the loaded WS
+ :If 0
+     cmd,←' -x'For debugging the loaded WS
+ :EndIf
  (successFlag rc result)←##.OS.WinExecBatch cmd
  →T.PassesIf 1=successFlag
  →T.PassesIf 42=rc

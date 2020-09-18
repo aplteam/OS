@@ -14,7 +14,9 @@
  cmd,←' "',##.FilesAndDirs.PWD,'/Tests/Test_WinExecute"'
  cmd,←' session_file=""'
  cmd,←' maxws=8MB'
-⍝cmd,←' -x'  For debugging the loaded WS
+ :If 0
+     cmd,←' -x'For debugging the loaded WS
+ :EndIf
  filename←##.FilesAndDirs.PWD,'/Tests/Test_WinExecute.txt'
  ##.FilesAndDirs.DeleteFile filename
  (successFlag rc more)←##.OS.WinExecute cmd

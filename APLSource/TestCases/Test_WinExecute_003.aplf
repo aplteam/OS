@@ -14,6 +14,9 @@
  cmd,←' "',##.FilesAndDirs.PWD,'/Tests/Test_WinExecute"'
  cmd,←' session_file=""'
  cmd,←' maxws="8MB'
+ :If 0
+     cmd,←' -x'  ⍝ For debugging the loaded WS
+ :EndIf
  (successFlag rc more)←##.OS.WinExecute cmd
  →T.PassesIf successFlag=0
  →T.PassesIf 0≠≢more

@@ -15,7 +15,9 @@
  parms.lpParms,←'"',##.FilesAndDirs.PWD,'/Tests/Test_WinExecute"'
  parms.lpParms,←' session_file=""'
  parms.lpParms,←' maxws=8MB'
-⍝parms.lpParms,←' -x'   ⍝ For debugging the loaded WS
+ :If 0
+     parms.lpParms,←' -x'   ⍝ For debugging the loaded WS
+ :EndIf
  filename←##.FilesAndDirs.PWD,'/Tests/Test_WinExecute.txt'
  ##.FilesAndDirs.DeleteFile filename
  (successFlag rc more)←##.OS.WinExecute parms
