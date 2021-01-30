@@ -5,29 +5,29 @@
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- :If 'Win'≢##.APLTreeUtils2.GetOperatingSystem ⍬
+ :If 'Win'≢APLTreeUtils2.GetOperatingSystem ⍬
      R←T._WindowsOnly
      :Return
  :EndIf
 
  cmd←'"',(⊃#.GetCommandLineArgs),'"'
- cmd,←' "',##.FilesAndDirs.PWD,'/Tests/Test_WinExecute"'
+ cmd,←' "',FilesAndDirs.PWD,'/Tests/Test_WinExecute"'
  cmd,←' session_file=""'
  cmd,←' maxws=8MB'
  :If 0
      cmd,←' -x'For debugging the loaded WS
  :EndIf
- filename←##.FilesAndDirs.PWD,'/Tests/Test_WinExecute.txt'
- ##.FilesAndDirs.DeleteFile filename
+ filename←FilesAndDirs.PWD,'/Tests/Test_WinExecute.txt'
+ FilesAndDirs.DeleteFile filename
  (successFlag rc more)←##.OS.WinExecute cmd
  →T.GoToTidyUp 1≠successFlag
  →T.GoToTidyUp 42≠rc
  →T.GoToTidyUp 0≠≢more
- sec←filename{##.FilesAndDirs.Exists ⍺:⍵ ⋄ _←⎕DL 1 ⋄ 10=⍵:¯1 ⋄ ⍺ ∇ ⍵+1}0
+ sec←filename{FilesAndDirs.Exists ⍺:⍵ ⋄ _←⎕DL 1 ⋄ 10=⍵:¯1 ⋄ ⍺ ∇ ⍵+1}0
  →T.GoToTidyUp ¯1=sec ⍝ Something went wrong!
  →T.GoToTidyUp 3>sec
 
  R←T._OK
 
 ∆TidyUp:
- ##.FilesAndDirs.DeleteFile filename
+ FilesAndDirs.DeleteFile filename

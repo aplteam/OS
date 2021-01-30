@@ -4,12 +4,12 @@
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- :If 'Win'≢##.APLTreeUtils2.GetOperatingSystem ⍬
+ :If 'Win'≢APLTreeUtils2.GetOperatingSystem ⍬
      R←T._WindowsOnly
      :Return
  :EndIf
 
- path←##.FilesAndDirs.ExpandPath ##.FilesAndDirs.PWD,'..\..\'
+ path←FilesAndDirs.ExpandPath FilesAndDirs.PWD,'..\..\'
  cmd←'CMD /C Dir ',path
  :If 0
      cmd,←' -x'For debugging the loaded WS
@@ -17,7 +17,7 @@
  (successFlag rc result)←##.OS.WinExecBatch cmd
  →T.PassesIf 1=successFlag
  →T.PassesIf 42=rc
- list←(≢path)↓¨⊃##.FilesAndDirs.Dir path
+ list←(≢path)↓¨⊃FilesAndDirs.Dir path
  →T.PassesIf∧/∨/¨list⍷¨⊂result
 
  R←T._OK

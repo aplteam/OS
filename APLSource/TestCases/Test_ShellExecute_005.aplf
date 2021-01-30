@@ -4,7 +4,7 @@
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- :If 'Mac'≢##.APLTreeUtils2.GetOperatingSystem ⍬
+ :If 'Mac'≢APLTreeUtils2.GetOperatingSystem ⍬
      R←T._MacOnly
      :Return
  :EndIf
@@ -13,7 +13,7 @@
      :Return
  :EndIf
 
- filename←##.FilesAndDirs.PWD,'/Tests/Sample.html'
+ filename←FilesAndDirs.PWD,'/Tests/Sample.html'
  (rc more result)←##.OS.ShellExecute'open file://',filename,' &'
  →T.PassesIf 0=rc
  →T.PassesIf 0=≢more

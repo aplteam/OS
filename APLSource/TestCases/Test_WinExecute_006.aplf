@@ -9,27 +9,27 @@
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- :If 'Win'≢##.APLTreeUtils2.GetOperatingSystem ⍬
+ :If 'Win'≢APLTreeUtils2.GetOperatingSystem ⍬
      R←T._WindowsOnly
      :Return
  :EndIf
 
  cmd←'"',(⊃2 ⎕NQ #'GetCommandLineArgs'),'"'
- cmd,←' "',##.FilesAndDirs.PWD,'/Tests/Test_ToBeKilled"'
+ cmd,←' "',FilesAndDirs.PWD,'/Tests/Test_ToBeKilled"'
  cmd,←' session_file=""'
  cmd,←' maxws=8MB'
  :If 0
      cmd,←' -x' ⍝ For debugging the loaded WS
  :EndIf
- tempPath←##.FilesAndDirs.GetTempPath
+ tempPath←FilesAndDirs.GetTempPath
  filename←tempPath,'Test_ToBeKilled.pid'
- ##.FilesAndDirs.DeleteFile filename ⍝ Left-overs?!
+ FilesAndDirs.DeleteFile filename ⍝ Left-overs?!
  (successFlag rc more)←##.OS.WinExecute cmd
  →T.GoToTidyUp 1≠successFlag
  →T.GoToTidyUp 42≠rc
  →T.GoToTidyUp 0≠≢more
  filename{⎕NEXISTS ⍺: ⋄ _←⎕DL 1 ⋄ 10=⍵: ⋄ ⍺ ∇ ⍵+1}0
- pid←(⊃##.FilesAndDirs.NGET filename)~⎕TC
+ pid←(⊃FilesAndDirs.NGET filename)~⎕TC
  →T.GoToTidyUp 1≠⊃⎕VFI pid
  filename2←(¯4↓filename),'.',⍕pid
  :Trap 19 22
@@ -49,7 +49,7 @@
  R←T._OK
 
 ∆TidyUp:
- ##.FilesAndDirs.DeleteFile filename
+ FilesAndDirs.DeleteFile filename
  :Trap 0
-     ##.FilesAndDirs.DeleteFile filename2  ⍝ is probably still not available for delete
+     FilesAndDirs.DeleteFile filename2  ⍝ is probably still not available for delete
  :EndTrap

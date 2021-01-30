@@ -4,7 +4,7 @@
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- :If ~(⊂##.APLTreeUtils2.GetOperatingSystem ⍬)∊'Lin' 'Mac'
+ :If ~(⊂APLTreeUtils2.GetOperatingSystem ⍬)∊'Lin' 'Mac'
      R←T._LinuxOrMacOnly
      :Return
  :EndIf

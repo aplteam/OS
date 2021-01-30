@@ -4,31 +4,31 @@
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- :If 'Win'≢##.APLTreeUtils2.GetOperatingSystem ⍬
+ :If 'Win'≢APLTreeUtils2.GetOperatingSystem ⍬
      R←T._WindowsOnly
      :Return
  :EndIf
 
  parms←##.OS.CreateParms_WinExecute
  parms.file←'"',(⊃#.GetCommandLineArgs),'"'
- parms.lpParms,←'"',##.FilesAndDirs.PWD,'/Tests/Test_WinExecute_005"'
+ parms.lpParms,←'"',FilesAndDirs.PWD,'/Tests/Test_WinExecute_005"'
  parms.lpParms,←' session_file=""'
  parms.lpParms,←' maxws=8MB'
  :If 0
      parms.lpParms,←' -x'  ⍝ For debugging the loaded WS
  :EndIf
- filename←##.FilesAndDirs.PWD,'/Tests/Test_WinExecute_005.txt'
- ##.FilesAndDirs.DeleteFile filename
+ filename←FilesAndDirs.PWD,'/Tests/Test_WinExecute_005.txt'
+ FilesAndDirs.DeleteFile filename
  (successFlag rc more)←##.OS.WinExecute parms
  →T.PassesIf 1=successFlag
  →T.PassesIf 42=rc
  →T.PassesIf 0=≢more
  sec←filename{⎕NEXISTS ⍺:⍵ ⋄ _←⎕DL 1 ⋄ 10=⍵:¯1 ⋄ ⍺ ∇ ⍵+1}0
  →T.GoToTidyUp ¯1=sec ⍝ Something went wrong!
- buff←(⊃##.FilesAndDirs.NGET filename)~⎕TC
+ buff←(⊃FilesAndDirs.NGET filename)~⎕TC
  →T.GoToTidyUp 1≠⊃⎕VFI buff
  →T.GoToTidyUp 0≠2⊃⎕VFI buff
- ##.FilesAndDirs.DeleteFile filename
+ FilesAndDirs.DeleteFile filename
 
 ⍝ Now again but with admin rights - this will fail if you do not have admin rights!
 
@@ -38,7 +38,7 @@
  →T.PassesIf 0=≢more
  sec←filename{_←⎕DL 0.2 ⋄ ⎕NEXISTS ⍺:⍵ ⋄ 10=⍵:¯1 ⋄ ⍺ ∇ ⍵+1}0
  →T.GoToTidyUp ¯1=sec ⍝ Something went wrong!
- buff←(⊃##.FilesAndDirs.NGET filename)~⎕TC
+ buff←(⊃FilesAndDirs.NGET filename)~⎕TC
  →T.GoToTidyUp 1≠⊃⎕VFI buff
  →T.GoToTidyUp 1≠2⊃⎕VFI buff
 
