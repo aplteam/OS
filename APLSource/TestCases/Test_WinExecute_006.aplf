@@ -15,7 +15,7 @@
  :EndIf
 
  cmd←'"',(⊃2 ⎕NQ #'GetCommandLineArgs'),'"'
- cmd,←' "',FilesAndDirs.PWD,'/Tests/Test_ToBeKilled"'
+ cmd,←' "',##.CiderConfig.HOME,'/Tests/Test_ToBeKilled"'
  cmd,←' session_file=""'
  cmd,←' maxws=8MB'
  :If 0

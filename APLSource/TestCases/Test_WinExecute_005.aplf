@@ -11,13 +11,13 @@
 
  parms←##.OS.CreateParms_WinExecute
  parms.file←'"',(⊃#.GetCommandLineArgs),'"'
- parms.lpParms,←'"',FilesAndDirs.PWD,'/Tests/Test_WinExecute_005"'
+ parms.lpParms,←'"',##.CiderConfig.HOME,'/Tests/Test_WinExecute_005"'
  parms.lpParms,←' session_file=""'
  parms.lpParms,←' maxws=8MB'
  :If 0
      parms.lpParms,←' -x'  ⍝ For debugging the loaded WS
  :EndIf
- filename←FilesAndDirs.PWD,'/Tests/Test_WinExecute_005.txt'
+ filename←##.CiderConfig.HOME,'/Tests/Test_WinExecute_005.txt'
  FilesAndDirs.DeleteFile filename
  (successFlag rc more)←##.OS.WinExecute parms
  →T.PassesIf 1=successFlag

@@ -11,13 +11,13 @@
  :EndIf
 
  cmd←'"',(⊃#.GetCommandLineArgs),'"'
- cmd,←' "',FilesAndDirs.PWD,'/Tests/Test_WinExecute"'
+ cmd,←' "',##.CiderConfig.HOME,'/Tests/Test_WinExecute"'
  cmd,←' session_file=""'
  cmd,←' maxws=8MB'
  :If 0
      cmd,←' -x'For debugging the loaded WS
  :EndIf
- filename←FilesAndDirs.PWD,'/Tests/Test_WinExecute.txt'
+ filename←##.CiderConfig.HOME,'/Tests/Test_WinExecute.txt'
  FilesAndDirs.DeleteFile filename
  (successFlag rc more)←##.OS.WinExecute cmd
  →T.GoToTidyUp 1≠successFlag
