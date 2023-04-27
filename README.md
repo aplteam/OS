@@ -28,4 +28,4 @@ Shared Methods:
 
 ## Requirements
 
-`OS` needs version 15.0 Unicode of Dyalog APL.
+`OS` needs version 18.0 Unicode of Dyalog APL.
