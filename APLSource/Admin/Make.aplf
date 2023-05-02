@@ -2,12 +2,12 @@
  :If flag
      M←⎕SE.MakeHelpers
      C←##.CiderConfig
-     path←C.HOME,'/Dist/'
+     path←C.HOME,'/',C.CIDER.distributionFolder
      cfg←⎕JSON⍠('Dialect' 'JSON5')⊢⊃⎕NGET C.HOME,'/apl-package.json'
      version←M.CompileVersionNumberPattern cfg
      M.RecreateFolder path
      parms←⎕SE.Tatin.CreateBuildParms C.HOME
-     parms.targetPath←path
+     parms.targetPath←C.CIDER.distributionFolder
      parms.version←version
      zipFilename←⎕SE.Tatin.BuildPackage parms
      ⎕←'*** New version build successfully:',M.CR,'   ',zipFilename
