@@ -1,6 +1,5 @@
- R←Test_ShellExecute_001(stopFlag batchFlag);more;rc;result;successFlag;⎕TRAP;filename
+ R←Test_ShellExecute_001(stopFlag batchFlag);cmd;filename;more;question;rc;result;successFlag;⎕TRAP
 ⍝ Show an HTML file via `ShellExecute` under Linux. Must run is its own thread, otherwise APL is blocked.
-⍝ R gets one of: 0=Okay, 1=test case failed, ¯1=test case was not executed due to the "batchFlag"
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
@@ -8,15 +7,28 @@
      R←T._LinuxOnly
      :Return
  :EndIf
+
  :If batchFlag
      R←T._NoBatchTest
      :Return
  :EndIf
 
- filename←FilesAndDirs.PWD,'/Tests/Sample.html'
- (rc more result)←##.OS.ShellExecute'xdg-open file://',filename,' &'
+ question←''
+ question,←⊂'This test case will try to open an HTML file with the default browser.'
+ question,←⊂'This makes no sense in case you are connected to a remote machine when'
+ question,←⊂'you cannot see the browser, or, worse, on a headless server'
+ question,←⊂'Do you want to execute the test case?'
+
+ :If 0=CommTools.YesOrNo question
+     R←T._NotApplicable ⋄ →0
+ :EndIf
+
+ filename←##.CiderConfig.HOME,'/Tests/Sample.html'
+ cmd←'xdg-open file://',filename,' &'
+ (rc more result)←##.OS.ShellExecute cmd
  →T.PassesIf 0=rc
  →T.PassesIf 0=≢more
- →T.PassesIf 1=1 ∆YesOrNo'Did ',filename,' show up in your default browser or in the RIDE browser?'
+ ⎕DL 3
+ →T.PassesIf 1=1 CommTools.YesOrNo'Did ',filename,' show up in your default/Ride browser? (May take several seconds)'
 
  R←T._OK

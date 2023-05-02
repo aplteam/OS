@@ -1,0 +1,28 @@
+ R←Test_Misc_010(stopFlag batchFlag);⎕TRAP;result;result2
+⍝ Exercise the `GetTaskList` method with all parameters
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ result←##.OS.GetTaskList 0 0
+ →T.PassesIf 2=⍴⍴result
+ →T.PassesIf 1≤≢result
+ →T.PassesIf' '=1↑0⍴↑result[;1]
+ →T.PassesIf 0=1↑0⍴↑result[;2]
+
+ result←##.OS.GetTaskList 0 1               ⍝ Add column titles
+ →T.PassesIf' '=1↑0⍴↑2↓result[;1]
+ →T.PassesIf 0=1↑0⍴↑2↓result[;2]
+ :If 'Win'≡APLTreeUtils2.GetOperatingSystem ⍬
+     →T.PassesIf'ImageName' 'PID'≡result[1;]~¨' '
+ :Else
+     →T.PassesIf'CMD' 'PID'≡result[1;]~¨' '
+ :EndIf
+
+ result←##.OS.GetTaskList 1 1               ⍝ Add some more info, OS-dependent
+ →T.PassesIf 2<2⊃⍴result
+
+ result2←'dyalOG'##.OS.GetTaskList 0 0      ⍝ Filter case independent
+ →T.PassesIf 1≤≢result2                     ⍝ Must be at least 1 (this instance!)
+ →T.PassesIf>/≢¨result result2
+
+ R←T._OK

@@ -1,7 +1,6 @@
  R←Test_WinExecute_004(stopFlag batchFlag);⎕TRAP;rc;sec;filename;successFlag;more;parms
 ⍝ Pass invalid "file" parameters via parameter space
 ⍝ The started WS waits for 3 seconds and then creates a file "Test_Win_002" as a sibling of the WS
-⍝ R gets one of: 0=Okay, 1=test case failed, ¯1=test case was not executed due to the "batchFlag"
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 

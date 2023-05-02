@@ -1,6 +1,5 @@
  R←Test_WinExecute_005(stopFlag batchFlag);⎕TRAP;rc;sec;successFlag;debugging;parms;result;filename;more;buff;EndIf
 ⍝ Load a WS and write the result of `WinSys.IsRunningAsAdmin` to a file
-⍝ R gets one of: 0=Okay, 1=test case failed, ¯1=test case was not executed due to the "batchFlag"
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 

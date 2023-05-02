@@ -1,41 +1,27 @@
- R←Test_ShellExecute_006(stopFlag batchFlag);EscapeSpace;cmd;dyalogPids;filename;pid;rc;tempPath;⎕TRAP
-⍝ Start APL in its own process and then kill that proces, testing `GetPID` and `KillPID` in the process.
-⍝ R gets one of: 0=Okay, 1=test case failed, ¯1=test case was not executed due to the "batchFlag"
+R←Test_ShellExecute_006(stopFlag batchFlag);parms;MyAPL;tempPath;filename;list;⎕TRAP
+⍝ Start APL in its own process and then kill it, testing `KillPID` in the process
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- :If 'Win'≡APLTreeUtils2.GetOperatingSystem ⍬
-     R←T._LinuxOrMacOnly
-     :Return
- :EndIf
+ parms←APLProcess.CreateParms
+ parms.Wait←0
+ parms.Runtime←1
+ parms.WorkspaceName←##.CiderConfig.HOME,'/Tests/Test_ToBeKilled.dws'
 
- :If batchFlag
-     R←T._NoBatchTest
-     :Return
- :EndIf
-
- EscapeSpace←{∊(⊂'\ ')@(⍸' '=⍵)⊢⍵}
-
- cmd←EscapeSpace⊃2 ⎕NQ #'GetCommandLineArgs'
- cmd,←' ',EscapeSpace FilesAndDirs.PWD,'/Tests/Test_ToBeKilled'
- cmd,←' session_file=""'
- cmd,←' maxws=8MB'
- :If 0
-     cmd,←' -x' ⍝ For debugging the loaded WS
- :EndIf
  tempPath←FilesAndDirs.GetTempPath
- filename←tempPath,'Test_ToBeKilled.pid'
+ filename←tempPath,'Test-ToBeKilled.*'
  FilesAndDirs.DeleteFile filename            ⍝ Get rid of any left-overs; this will be re-created by the process started
- rc←##.OS.ShellExecute cmd,' &'
- ⎕DL 0.2
- →T.PassesIf FilesAndDirs.IsFile filename
- pid←APLTreeUtils2.ToNum ⎕TC~⍨⊃FilesAndDirs.NGET filename
- →T.PassesIf 0<pid
- dyalogPids←{⊃APLTreeUtils2.ToNum 4⊃' '(≠⊆⊢)⍵}¨APLTreeUtils2.DMB↓{⍵⌿⍨∨/'dyalog'⍷⍵}↑' ',¨⍨⎕SH'ps -all'
- →T.PassesIf pid∊dyalogPids
- →T.PassesIf 0=##.OS.KillPID pid
- ⎕DL 0.2
- dyalogPids←{⊃APLTreeUtils2.ToNum 4⊃' '(≠⊆⊢)⍵}¨APLTreeUtils2.DMB↓{⍵⌿⍨∨/'dyalog'⍷⍵}↑' ',¨⍨⎕SH'ps -all'
- →T.PassesIf~pid∊dyalogPids
+
+ MyAPL←⎕NEW APLProcess(,⊂parms)
+ Assert MyAPL.HasExited=0
+ ⎕dl 1
+
+ list←##.OS.GetTaskList 0 0 0
+ →T.PassesIf MyAPL.GetPID∊list[;2]
+
+ →T.PassesIf 1=##.OS.KillPID MyAPL.GetPID
+ →T.PassesIf 1=MyAPL.HasExited
+ list←##.OS.GetTaskList 0 0 0
+ →T.PassesIf ~MyAPL.GetPID∊list[;2]
 
  R←T._OK

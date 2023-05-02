@@ -1,6 +1,5 @@
  R←Test_WinExecBatch_002(stopFlag batchFlag);⎕TRAP;rc;sec;successFlag;debugging;result;cmd;EndIf;path;list
 ⍝ Execute "Dir" command with `WinExecBatch` and return its standard output.
-⍝ R gets one of: 0=Okay, 1=test case failed, ¯1=test case was not executed due to the "batchFlag"
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 

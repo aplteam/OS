@@ -1,0 +1,11 @@
+ R←Test_Misc_005(stopFlag batchFlag);⎕TRAP;result
+⍝ Exercise the `History` method
+ ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ result←##.OS.History
+ →T.PassesIf 0<1=≡result
+ →T.PassesIf 2=⍴⍴result
+ →T.PassesIf' '=1↑0⍴result
+
+ R←T._OK
