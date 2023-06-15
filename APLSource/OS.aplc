@@ -15,7 +15,7 @@
     ∇
 
     ∇ r←History
-      :Access Public shared     
+      :Access Public shared
       ⍝ * 3.1.1 from 2023-05-08
       ⍝   * APLTreeUtils2 updated which was buggy (wrong version number)
       ⍝ * 3.1.0 from 2023-05-02
