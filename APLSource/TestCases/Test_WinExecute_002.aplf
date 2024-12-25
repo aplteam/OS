@@ -12,7 +12,7 @@
  cmd←'"',(⊃#.GetCommandLineArgs),'"'
  cmd,←' "',##.CiderConfig.HOME,'/Tests/Test_WinExecute"'
  cmd,←' session_file=""'
- cmd,←' maxws=8MB'
+ cmd,←' maxws=16MB'
  :If 0
      cmd,←' -x'For debugging the loaded WS
  :EndIf

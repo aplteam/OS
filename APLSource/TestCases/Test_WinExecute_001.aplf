@@ -13,7 +13,7 @@
  parms.file←'"',(⊃#.GetCommandLineArgs),'"'
  parms.lpParms,←'"',##.CiderConfig.HOME ,'/Tests/Test_WinExecute"'
  parms.lpParms,←' session_file=""'
- parms.lpParms,←' maxws=8MB'
+ parms.lpParms,←' maxws=16MB'
  :If 0
      parms.lpParms,←' -x'   ⍝ For debugging the loaded WS
  :EndIf
