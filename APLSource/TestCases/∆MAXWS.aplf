@@ -1,0 +1,4 @@
+r←∆MAXWS
+⍝ How much memory an instance of Dyalog needs depends on what the user loads into ⎕SE at startup time.
+⍝ If for you it does not work, increase it!
+r←'16MB'
