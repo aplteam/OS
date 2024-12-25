@@ -1,14 +1,14 @@
- Make flag;M;C;path;zipFilename;res;version;cfg;parms
+ Make flag;M;C;path;zipFilename;res;cfg;parms
  :If flag
      M←⎕SE.MakeHelpers
      C←##.CiderConfig
      path←C.HOME,'/',C.CIDER.distributionFolder
      cfg←⎕JSON⍠('Dialect' 'JSON5')⊢⊃⎕NGET C.HOME,'/apl-package.json'
-     version←M.CompileVersionNumberPattern cfg
+     cfg←M.EditVersion cfg
      M.RecreateFolder path
      parms←⎕SE.Tatin.CreateBuildParms C.HOME
      parms.targetPath←C.CIDER.distributionFolder
-     parms.version←version
+     parms.version←cfg.version
      zipFilename←⎕SE.Tatin.BuildPackage parms
      ⎕←'*** New version build successfully:',M.CR,'   ',zipFilename
  :EndIf

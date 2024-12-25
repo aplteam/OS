@@ -12,7 +12,7 @@
  parms.file←'"',(⊃#.GetCommandLineArgs),'"'
  parms.lpParms,←'"',##.CiderConfig.HOME,'/Tests/Test_WinExecute_005"'
  parms.lpParms,←' session_file=""'
- parms.lpParms,←' maxws=8MB'
+ parms.lpParms,←' maxws=16MB'
  :If 0
      parms.lpParms,←' -x'  ⍝ For debugging the loaded WS
  :EndIf
@@ -35,7 +35,7 @@
  →T.PassesIf 1=successFlag
  →T.PassesIf 42=rc
  →T.PassesIf 0=≢more
- sec←filename{_←⎕DL 0.2 ⋄ ⎕NEXISTS ⍺:⍵ ⋄ 10=⍵:¯1 ⋄ ⍺ ∇ ⍵+1}0
+ sec←filename{_←⎕DL 1 ⋄ ⎕NEXISTS ⍺:⍵ ⋄ 20=⍵:¯1 ⋄ ⍺ ∇ ⍵+1}0
  →T.GoToTidyUp ¯1=sec ⍝ Something went wrong!
  buff←(⊃FilesAndDirs.NGET filename)~⎕TC
  →T.GoToTidyUp 1≠⊃⎕VFI buff
