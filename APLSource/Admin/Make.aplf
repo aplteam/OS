@@ -1,10 +1,14 @@
  Make flag;M;C;path;zipFilename;res;cfg;parms
  :If flag
+     :If 0=⎕SE.⎕NC'MakeHelpers'
+         {}⎕SE.Tatin.LoadPackages'[tatin]MakeHelpers'⎕SE
+     :EndIf
      M←⎕SE.MakeHelpers
      C←##.CiderConfig
      path←C.HOME,'/',C.CIDER.distributionFolder
-     cfg←⎕JSON⍠('Dialect' 'JSON5')⊢⊃⎕NGET C.HOME,'/apl-package.json'
-     cfg←M.EditVersion cfg
+     :If ⎕NULL≡cfg←M.EditPackageConfigFile C.HOME
+         ⎕←'Cancelled by user' ⋄ →0
+     :EndIf
      M.RecreateFolder path
      parms←⎕SE.Tatin.CreateBuildParms C.HOME
      parms.targetPath←C.CIDER.distributionFolder
