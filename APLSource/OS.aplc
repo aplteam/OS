@@ -25,7 +25,9 @@
     ∇
 
     ∇ r←History
-      :Access Public shared
+      :Access Public shared 
+      ⍝ * 4.1.0 ⋄ 2025-09-10
+      ⍝   * LICENSE updated
       ⍝ * 4.0.0 ⋄ 2025-03-28
       ⍝   * `Version` has changed its syntax: it returns just a simple string with the version number now 
       ⍝     which comes from the package config file.
