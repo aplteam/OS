@@ -12,7 +12,7 @@ R←Test_ShellExecute_006(stopFlag batchFlag);parms;MyAPL;tempPath;filename;list
  filename←tempPath,'Test-ToBeKilled.*'
  FilesAndDirs.DeleteFile filename            ⍝ Get rid of any left-overs; this will be re-created by the process started
 
- MyAPL←⎕NEW APLProcess(,⊂parms)
+ MyAPL←APLProcess.New parms
  Assert MyAPL.HasExited=0
  ⎕dl 1
 

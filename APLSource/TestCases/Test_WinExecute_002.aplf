@@ -1,6 +1,6 @@
  R←Test_WinExecute_002(stopFlag batchFlag);⎕TRAP;rc;sec;filename;cmd;successFlag;debugging;more
 ⍝ Starts another instance of Dyalog which loads a WS that creates a file; parameters a passed as text string
-⍝ The started WS waits for 3 seconds and then creates a file "Test_Win_002" as a sibling of the WS
+⍝ The started WS waits for 4 seconds and then creates a file "Test_WinExecute.txt'" as a sibling of the WS
  ⎕TRAP←(999 'C' '. ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
@@ -14,7 +14,7 @@
  cmd,←' session_file=""'
  cmd,←' maxws=',∆MAXWS
  :If 0
-     cmd,←' -x'For debugging the loaded WS
+     cmd,←' -x'    ⍝ For debugging the loaded WS
  :EndIf
  filename←##.CiderConfig.HOME,'/Tests/Test_WinExecute.txt'
  FilesAndDirs.DeleteFile filename
